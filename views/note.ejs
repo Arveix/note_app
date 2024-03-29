@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang='en'>
+	<head>
+		<title>
+			Note taking app
+		</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		
+		<style>
+			body {
+				display: flex;
+				justify-content: space-around;
+				align-items: center;
+				max-width: 60vw;
+				height: 100vh;
+				margin: auto;
+			}
+			
+			#note_form {
+				display: none;
+			}
+			#submit_button {
+				display: none;
+			}
+			#cancel_button {
+				display: none;
+			}
+			
+		</style>
+	<head>
+	<body>
+	
+		<div id="container">
+	
+		<a href="/"><button>&lt;- Home</button></a>
+		
+		<div id="noteContainer">
+			<h2 id="noteTitle"><%= note.title %></h2>
+			<p id="noteText"><%= note.note %></p>
+		</div>
+		
+		<form id="note_form" method="post" action="/edit_note/<%=note.id%>">
+			<label for="title"> Edit the note title </label>
+			<input type="text" name="title" id="title" placeholder="Note title" autocomplete="off" value="<%= note.title %>"/>
+			<br />
+			<label for="note"> Edit your note here: </label>
+			<textarea id="note" name="note"><%= note.note %></textarea>
+		</form>	
+		<br />
+		<button id="edit_button">Edit note</button>
+		<button id="delete_button" onclick="confirmDel()"> Delete note </button>
+		<button id="submit_button" type="submit" form="note_form">Save Note</button>
+		<button id="cancel_button">Cancel</button>	
+		
+		</div>
+		
+		<script>
+			const noteContainer = document.getElementById('noteContainer');
+			const edit_button = document.getElementById('edit_button');
+			const delete_button = document.getElementById('delete_button');
+			const noteform = document.getElementById('noteform');
+			const submit_button = document.getElementById('submit_button');
+			const cancel_button = document.getElementById('cancel_button');
+			const noteTxt = document.getElementById('note');
+			const noteTitle = document.getElementById('title');
+			//console.log(edit_button);
+			edit_button.addEventListener('click', () => {
+				edit_button.style.display = 'none';
+				delete_button.style.display = 'none';
+				noteContainer.style.display = 'none';
+				submit_button.style.display = 'inline';
+				note_form.style.display = 'block';
+				cancel_button.style.display = 'inline';
+			});
+			cancel_button.addEventListener('click', () => {
+				edit_button.style.display = 'inline';
+				delete_button.style.display = 'inline';
+				noteContainer.style.display = 'block';
+				submit_button.style.display = 'none';
+				note_form.style.display = 'none';
+				cancel_button.style.display = 'none';
+				noteTxt.value = '<%=note.note%>';
+				noteTitle.value = '<%=note.title%>';
+			});
+			
+			function confirmDel() {
+				let del = window.confirm("Are you sure you want to delete this note?");
+				console.log(del);
+				if(del) {
+					window.location.href = '/delete_note/<%=note.id%>';
+				}
+			}
+		</script>
+		
+	</body>
+</html>

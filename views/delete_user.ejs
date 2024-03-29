@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Note app</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <a href="/"><button><- Home</button></a>
+    <h1>Delete Account?</h1>
+    <br />
+    <p>Are you sure you wanna delete your account? <br />All of your notes will be irreversibly deleted with your account.</p>
+    <br />
+    <form method="post" action="/confirm_delete">
+        <label for="password">Enter your password to confirm deletion of your account: </label>
+        <br />
+        <input type="password" name="password" id="password" required /> <span><%=del.message%></span>
+        <br />
+        <button type="submit">Delete</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang='en'>
+	<head>
+		<title>
+			Note taking app
+		</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		
+		<style>
+			body {
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				max-width: 60vw;
+				height: 100vh;
+				margin: auto;
+			}
+			#mainBody {
+				display: flex;
+				justify-content: space-around;
+				align-items: center;
+			}
+			#note_form {
+				display: none;
+			}
+			#submit_button {
+				display: none;
+			}
+			#cancel_button {
+				display: none;
+			}
+		</style>
+	<head>
+	<body>
+		<div id="nav"><%=data.username%> <a href="/logout">Logout</a> <a href="/delete_user">Delete user</a></div>
+		<div id="mainBody">
+			<div id="formContainer">
+				<form id="note_form" method="post" action="/new_note">
+					<label for="title"> Enter the note title </label>
+					<input type="text" name="title" id="title" placeholder="Note title" autocomplete="off" required />
+					<br />
+					<label for="note"> Enter your note here: </label>
+					<textarea id="note" name="note"></textarea>
+				</form>
+				<br />
+				<button id="note_button">New Note</button>
+				<button id="submit_button" type="submit" form="note_form">Save Note</button>
+				<button id="cancel_button">Cancel</button>	
+				</div>
+		
+				<div id="noteListContainer">
+					<ul id="noteList">
+						<%for(const note of data.noteList) {%>
+							<a href="/note/<%=note.id%>"><li><%=note.title%></li></a>
+						<%}%>
+						
+					</ul>
+				</div>
+		</div>
+		
+		<script>
+			const note_button = document.getElementById('note_button');
+			const noteform = document.getElementById('noteform');
+			const submit_button = document.getElementById('submit_button');
+			const cancel_button = document.getElementById('cancel_button');
+			const noteTxt = document.getElementById('note');
+			const noteTitle = document.getElementById('title');
+			const deleteUser = document.getElementById('deleteUser');
+			note_button.addEventListener('click', () => {
+				note_button.style.display = 'none';
+				submit_button.style.display = 'inline';
+				note_form.style.display = 'block';
+				cancel_button.style.display = 'inline';
+			});
+			cancel_button.addEventListener('click', () => {
+				note_button.style.display = 'inline';
+				submit_button.style.display = 'none';
+				note_form.style.display = 'none';
+				cancel_button.style.display = 'none';
+				noteTxt.value = '';
+				noteTitle.value = '';
+			});
+		</script>
+		
+	</body>
+</html>
